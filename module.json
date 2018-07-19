@@ -1,0 +1,17 @@
+{
+    "name": "Suscriptions",
+    "alias": "suscriptions",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Suscriptions\\Providers\\SuscriptionsServiceProvider",
+        "Modules\\Suscriptions\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        
+    ],
+    "requires": []
+}
