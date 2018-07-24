@@ -14,8 +14,21 @@ class CreateSuscriptionsPlansTable extends Migration
     {
         Schema::create('suscriptions__plans', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
-            // Your fields
+            $table->increments('id')->unsigned();
+            $table->string('code');
+            $table->integer('status')->default(0);
+            $table->integer('display_order')->nullable();
+            $table->boolean('recommendation')->default(false);
+            $table->boolean('free')->default(false);
+            $table->boolean('visible')->default(false);
+            $table->double('price',30,2)->nullable();
+            $table->integer('frequency');
+            $table->string('bill_cycle');
+            $table->integer('trial_period')->default(0);
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('suscriptions__products')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }
@@ -27,6 +40,9 @@ class CreateSuscriptionsPlansTable extends Migration
      */
     public function down()
     {
+        Schema::table('suscriptions__plans', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);
+        });
         Schema::dropIfExists('suscriptions__plans');
     }
 }

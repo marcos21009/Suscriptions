@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuscriptionsPlanTranslationsTable extends Migration
+class CreateSuscriptionsPlanFeaturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,18 @@ class CreateSuscriptionsPlanTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('suscriptions__plan_translations', function (Blueprint $table) {
+        Schema::create('suscriptions__planfeatures', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->text('description')->nullable();
-
+            $table->integer('feature_id')->unsigned();
             $table->integer('plan_id')->unsigned();
-            $table->string('locale')->index();
-            $table->unique(['plan_id', 'locale']);
+
+
+            $table->foreign('feature_id')->references('id')->on('suscriptions__features')->onDelete('cascade');
             $table->foreign('plan_id')->references('id')->on('suscriptions__plans')->onDelete('cascade');
+
+
+            $table->timestamps();
         });
     }
 
@@ -32,9 +34,11 @@ class CreateSuscriptionsPlanTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('suscriptions__plan_translations', function (Blueprint $table) {
+        Schema::table('suscriptions__planfeatures', function (Blueprint $table) {
+            $table->dropForeign(['feature_id']);
             $table->dropForeign(['plan_id']);
         });
-        Schema::dropIfExists('suscriptions__plan_translations');
+
+        Schema::dropIfExists('suscriptions__planfeatures');
     }
 }

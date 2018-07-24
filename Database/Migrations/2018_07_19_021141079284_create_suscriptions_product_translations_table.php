@@ -15,12 +15,14 @@ class CreateSuscriptionsProductTranslationsTable extends Migration
         Schema::create('suscriptions__product_translations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            // Your translatable fields
+            $table->string('name');
+            $table->text('description')->nullable();
 
             $table->integer('product_id')->unsigned();
             $table->string('locale')->index();
             $table->unique(['product_id', 'locale']);
             $table->foreign('product_id')->references('id')->on('suscriptions__products')->onDelete('cascade');
+
         });
     }
 

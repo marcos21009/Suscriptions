@@ -14,8 +14,13 @@ class CreateSuscriptionsFeatureTranslationsTable extends Migration
     {
         Schema::create('suscriptions__feature_translations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
-            // Your translatable fields
+            $table->increments('id')->unsigned();
+            $table->string('name');
+            $table->string('caption')->nullable();
+            $table->text('description')->nullable();
+
+
+
 
             $table->integer('feature_id')->unsigned();
             $table->string('locale')->index();

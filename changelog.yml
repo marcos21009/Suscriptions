@@ -1,0 +1,8 @@
+url: https://github.com/AsgardCms/Platform
+versions:
+    "0.0.2":
+        changed:
+          - migrate product
+    "0.0.1":
+        changed:
+            - Initial release

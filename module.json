@@ -4,6 +4,7 @@
     "description": "",
     "keywords": [],
     "active": 1,
+    "version": "0.0.1",
     "order": 1,
     "providers": [
         "Modules\\Suscriptions\\Providers\\SuscriptionsServiceProvider",

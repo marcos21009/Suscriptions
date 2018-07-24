@@ -9,6 +9,9 @@ use Modules\Suscriptions\Http\Requests\CreateProductRequest;
 use Modules\Suscriptions\Http\Requests\UpdateProductRequest;
 use Modules\Suscriptions\Repositories\ProductRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Blog\Entities\Status;
+use Modules\Media\Repositories\FileRepository;
+use Modules\User\Repositories\UserRepository;
 
 class ProductController extends AdminBaseController
 {
@@ -17,11 +20,19 @@ class ProductController extends AdminBaseController
      */
     private $product;
 
-    public function __construct(ProductRepository $product)
+    public $users;
+
+    public $file;
+    public $status;
+
+    public function __construct(ProductRepository $product, FileRepository $file, UserRepository $users, Status $status)
     {
         parent::__construct();
 
         $this->product = $product;
+        $this->file = $file;
+        $this->users->users;
+        $this->status = $status;
     }
 
     /**
@@ -31,9 +42,9 @@ class ProductController extends AdminBaseController
      */
     public function index()
     {
-        //$products = $this->product->all();
+        $products = $this->product->paginate(9);
 
-        return view('suscriptions::admin.products.index', compact(''));
+        return view('suscriptions::admin.products.index', compact('products'));
     }
 
     /**
@@ -43,7 +54,10 @@ class ProductController extends AdminBaseController
      */
     public function create()
     {
-        return view('suscriptions::admin.products.create');
+        $statuses = $this->status->lists();
+        $users = $this->user->all();
+        $this->assetPipeline->requireJs('ckeditor.js');
+        return view('suscriptions::admin.products.create', compact('statuses', 'users'));
     }
 
     /**
@@ -54,10 +68,18 @@ class ProductController extends AdminBaseController
      */
     public function store(CreateProductRequest $request)
     {
-        $this->product->create($request->all());
+        try {
+            $this->product->create($request->all());
 
-        return redirect()->route('admin.suscriptions.product.index')
-            ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('suscriptions::products.title.products')]));
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('suscriptions::products.title.products')]));
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withError(trans('core::core.messages.resource error', ['name' => trans('suscriptions::products.title.products')]));
+        }
+
+
     }
 
     /**
@@ -68,7 +90,11 @@ class ProductController extends AdminBaseController
      */
     public function edit(Product $product)
     {
-        return view('suscriptions::admin.products.edit', compact('product'));
+        $statuses = $this->status->lists();
+        $users = $this->user->all();
+        $this->assetPipeline->requireJs('ckeditor.js');
+        $thumbnail = $this->file->findFileByZoneForEntity('thumbnail', $product);
+        return view('suscriptions::admin.products.edit', compact('product', 'thumbnail', 'statuses', 'users'));
     }
 
     /**
@@ -80,10 +106,18 @@ class ProductController extends AdminBaseController
      */
     public function update(Product $product, UpdateProductRequest $request)
     {
-        $this->product->update($product, $request->all());
+        try {
+            $this->product->update($product, $request->all());
 
-        return redirect()->route('admin.suscriptions.product.index')
-            ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('suscriptions::products.title.products')]));
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('suscriptions::products.title.products')]));
+
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withSuccess(trans('core::core.messages.resource error', ['name' => trans('suscriptions::products.title.products')]));
+
+        }
     }
 
     /**
@@ -94,9 +128,17 @@ class ProductController extends AdminBaseController
      */
     public function destroy(Product $product)
     {
-        $this->product->destroy($product);
+        try {
+            $this->product->destroy($product);
 
-        return redirect()->route('admin.suscriptions.product.index')
-            ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('suscriptions::products.title.products')]));
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('suscriptions::products.title.products')]));
+
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->route('admin.suscriptions.product.index')
+                ->withSuccess(trans('core::core.messages.resource error', ['name' => trans('suscriptions::products.title.products')]));
+
+        }
     }
 }

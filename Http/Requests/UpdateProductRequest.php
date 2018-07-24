@@ -13,7 +13,9 @@ class UpdateProductRequest extends BaseFormRequest
 
     public function translationRules()
     {
-        return [];
+        return [
+            'name'=>'required:min2'
+        ];
     }
 
     public function authorize()
@@ -28,6 +30,9 @@ class UpdateProductRequest extends BaseFormRequest
 
     public function translationMessages()
     {
-        return [];
+        return [
+            'name.required' => trans('suscription::messages.name is required'),
+            'name.min2'=>trans('suscription::messages.name is min 2')
+        ];
     }
 }

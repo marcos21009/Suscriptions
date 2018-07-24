@@ -14,8 +14,12 @@ class CreateSuscriptionsFeaturesTable extends Migration
     {
         Schema::create('suscriptions__features', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
-            // Your fields
+            $table->increments('id')->unsigned();
+            $table->integer('status')->default(0);
+            $table->integer('type');
+            $table->string('unit')->nullable();
+
+
             $table->timestamps();
         });
     }

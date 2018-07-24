@@ -25,7 +25,14 @@ return [
         'edit' => 'suscriptions::suscriptions.edit resource',
         'destroy' => 'suscriptions::suscriptions.destroy resource',
     ],
+    'suscriptions.planfeatures' => [
+        'index' => 'suscriptions::planfeatures.list resource',
+        'create' => 'suscriptions::planfeatures.create resource',
+        'edit' => 'suscriptions::planfeatures.edit resource',
+        'destroy' => 'suscriptions::planfeatures.destroy resource',
+    ],
 // append
+
 
 
 
