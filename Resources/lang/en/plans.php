@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'singular'=>'Plan',
+    'plural'=>'Plans',
     'list resource' => 'List plans',
     'create resource' => 'Create plans',
     'edit resource' => 'Edit plans',

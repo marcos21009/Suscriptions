@@ -44,7 +44,7 @@ $router->group(['prefix' => '/suscriptions'], function (Router $router) {
     });
 
 
-    $router->group(['prefix' => '/plans'], function (Router $router) {
+    $router->group(['prefix' => '/{id_product}/plans'], function (Router $router) {
 
         $router->bind('plans', function ($id) {
             return app('Modules\Suscriptions\Repositories\PlanRepository')->find($id);
@@ -82,7 +82,7 @@ $router->group(['prefix' => '/suscriptions'], function (Router $router) {
         ]);
     });
 
-    $router->group(['prefix' => '/features'], function (Router $router) {
+    $router->group(['prefix' => '/{product_id}/features'], function (Router $router) {
 
         $router->bind('features', function ($id) {
             return app('Modules\Suscriptions\Repositories\FeautresRepository')->find($id);

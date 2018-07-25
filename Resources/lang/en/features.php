@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'singular'=>'Feature',
+    'plural'=>'Features',
     'list resource' => 'List features',
     'create resource' => 'Create features',
     'edit resource' => 'Edit features',

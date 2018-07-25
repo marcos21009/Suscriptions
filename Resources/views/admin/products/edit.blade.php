@@ -14,26 +14,154 @@
 @section('content')
     {!! Form::open(['route' => ['admin.suscriptions.product.update', $product->id], 'method' => 'put']) !!}
     <div class="row">
-        <div class="col-md-12">
-            <div class="nav-tabs-custom">
-                @include('partials.form-tab-headers')
-                <div class="tab-content">
-                    <?php $i = 0; ?>
-                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
-                        <?php $i++; ?>
-                        <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
-                            @include('suscriptions::admin.products.partials.edit-fields', ['lang' => $locale])
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                @include('partials.form-tab-headers', ['fields' => ['name']])
+                                <div class="tab-content">
+                                    @php $i = 0; @endphp
+                                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
+                                        @php $i++; @endphp
+                                        <div class="tab-pane {{ App::getLocale() == $locale ? 'active' : '' }}"
+                                             id="tab_{{ $i }}">
+                                            @include('suscriptions::admin.products.partials.edit-fields', ['lang' => $locale])
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div> {{-- end nav-tabs-custom --}}
                         </div>
-                    @endforeach
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.suscriptions.product.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
                 </div>
-            </div> {{-- end nav-tabs-custom --}}
+            </div>
+          {{-- @if (config('suscriptions::config.products.partials.normal.create') !== [])
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Adicional</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="nav-tabs-custom">
+                                    <div class="tab-content">
+                                        @foreach (config('asgard.suscriptions.config.products.partials.normal.create') as $partial)
+                                            @include($partial)
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif--}}
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">{{trans('suscriptions::products.form.publish')}}:</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <div class="tab-content">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                {!! Form::label("status", trans('suscriptions::products.form.Product Status:')) !!}
+                                                <select name="status" id="status" class="form-control">
+                                                    @foreach ($statuses as $id => $status)
+                                                        <option value="{{ $id }}" {{ old('status', 0) == $id ? 'selected' : '' }}>{{ $status }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class='form-group{{ $errors->has("create_at") ? ' has-error' : '' }}'>
+                                                {!! Form::label("{[create_at]", trans('suscriptions::products.form.create')) !!}
+                                                <input type="datetime-local" name="create_at" id="create_at"
+                                                       {{old("create_at")}}, class='form-control slug'/>
+                                                {!! $errors->first("create_at", '<span class="help-block">:message</span>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <button type="submit"
+                                            class="btn btn-primary btn-flat">{{ trans('suscriptions::products.button.edit product') }}</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">{{trans('suscriptions::products.form.Featured Image')}}</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <div class="tab-content">
+                                    @mediaSingle('thumbnail',$product)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">{{trans('suscriptions::products.form.autor')}}</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <div class="tab-content">
+                                    <select name="user_id" id="user" class="form-control">
+                                        @foreach ($users as $user)
+                                            <option value="{{$user->id }}" {{$user->id == $currentUser->id ? 'selected' : ''}}>{{$user->present()->fullname()}}
+                                                - ({{$user->email}})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
     {!! Form::close() !!}
 @stop
 

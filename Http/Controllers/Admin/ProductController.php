@@ -9,7 +9,7 @@ use Modules\Suscriptions\Http\Requests\CreateProductRequest;
 use Modules\Suscriptions\Http\Requests\UpdateProductRequest;
 use Modules\Suscriptions\Repositories\ProductRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
-use Modules\Blog\Entities\Status;
+use Modules\Suscriptions\Entities\Status;
 use Modules\Media\Repositories\FileRepository;
 use Modules\User\Repositories\UserRepository;
 
@@ -31,7 +31,7 @@ class ProductController extends AdminBaseController
 
         $this->product = $product;
         $this->file = $file;
-        $this->users->users;
+        $this->users=$users;
         $this->status = $status;
     }
 
@@ -55,7 +55,7 @@ class ProductController extends AdminBaseController
     public function create()
     {
         $statuses = $this->status->lists();
-        $users = $this->user->all();
+        $users = $this->users->all();
         $this->assetPipeline->requireJs('ckeditor.js');
         return view('suscriptions::admin.products.create', compact('statuses', 'users'));
     }
@@ -68,6 +68,7 @@ class ProductController extends AdminBaseController
      */
     public function store(CreateProductRequest $request)
     {
+
         try {
             $this->product->create($request->all());
 
@@ -91,7 +92,7 @@ class ProductController extends AdminBaseController
     public function edit(Product $product)
     {
         $statuses = $this->status->lists();
-        $users = $this->user->all();
+        $users = $this->users->all();
         $this->assetPipeline->requireJs('ckeditor.js');
         $thumbnail = $this->file->findFileByZoneForEntity('thumbnail', $product);
         return view('suscriptions::admin.products.edit', compact('product', 'thumbnail', 'statuses', 'users'));

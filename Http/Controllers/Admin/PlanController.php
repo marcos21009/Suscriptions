@@ -29,7 +29,7 @@ class PlanController extends AdminBaseController
      *
      * @return Response
      */
-    public function index()
+    public function index($id_product)
     {
         //$plans = $this->plan->all();
 

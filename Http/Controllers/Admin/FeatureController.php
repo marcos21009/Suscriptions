@@ -16,12 +16,20 @@ class FeatureController extends AdminBaseController
      * @var FeatureRepository
      */
     private $feature;
+    public $users;
 
-    public function __construct(FeatureRepository $feature)
+    public $file;
+    public $status;
+
+    public function __construct(FeatureRepository $feature, FileRepository $file, UserRepository $users, Status $status)
     {
         parent::__construct();
 
         $this->feature = $feature;
+
+
+
+
     }
 
     /**
@@ -29,7 +37,7 @@ class FeatureController extends AdminBaseController
      *
      * @return Response
      */
-    public function index()
+    public function index($product_id)
     {
         //$features = $this->feature->all();
 
