@@ -27,7 +27,7 @@ class CreateSuscriptionsPlansTable extends Migration
             $table->integer('trial_period')->default(0);
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('suscriptions__products')->onDelete('cascade');
-
+            $table->text('options')->nullable();
 
             $table->timestamps();
         });

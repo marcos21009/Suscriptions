@@ -16,6 +16,13 @@ return [
         'create feature' => 'Create a feature',
     ],
     'table' => [
+        'id'=>'Id',
+        'name'=>'Name',
+        'caption'=>'Caption',
+        'unit'=>'Unit',
+        'status'=>'Status',
+
+
     ],
     'form' => [
     ],

@@ -13,7 +13,6 @@
 
 @section('content')
     {!! Form::open(['route' => ['admin.suscriptions.product.store'], 'method' => 'post']) !!}
-
     <div class="row">
         <div class="col-md-8">
             <div class="row">

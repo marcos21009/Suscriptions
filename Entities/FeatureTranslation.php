@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class FeatureTranslation extends Model
 {
     public $timestamps = false;
-    protected $fillable = [];
+    protected $fillable = ['name','caption','description'];
     protected $table = 'suscriptions__feature_translations';
 }

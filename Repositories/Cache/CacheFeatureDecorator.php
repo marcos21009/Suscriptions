@@ -13,4 +13,11 @@ class CacheFeatureDecorator extends BaseCacheDecorator implements FeatureReposit
         $this->entityName = 'suscriptions.features';
         $this->repository = $feature;
     }
+
+    public function whereProduct($product_id, $perPage = 15)
+    {
+        return $this->remember(function () use ($product_id, $perPage) {
+            return $this->repository->whereProduct($product_id, $perPage);
+        });
+    }
 }

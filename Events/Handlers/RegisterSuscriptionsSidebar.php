@@ -52,7 +52,7 @@ class RegisterSuscriptionsSidebar implements \Maatwebsite\Sidebar\SidebarExtende
                         $this->auth->hasAccess('suscriptions.products.index')
                     );
                 });
-                $item->item(trans('suscriptions::plans.title.plans'), function (Item $item) {
+            /*    $item->item(trans('suscriptions::plans.title.plans'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
                     $item->append('admin.suscriptions.plan.create');
@@ -70,6 +70,7 @@ class RegisterSuscriptionsSidebar implements \Maatwebsite\Sidebar\SidebarExtende
                         $this->auth->hasAccess('suscriptions.features.index')
                     );
                 });
+            ]*/
                 $item->item(trans('suscriptions::suscriptions.title.suscriptions'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);

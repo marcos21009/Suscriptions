@@ -18,6 +18,9 @@ class CreateSuscriptionsFeaturesTable extends Migration
             $table->integer('status')->default(0);
             $table->integer('type');
             $table->string('unit')->nullable();
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('suscriptions__products')->onDelete('cascade');
+            $table->text('options')->nullable();
 
 
             $table->timestamps();
@@ -31,6 +34,9 @@ class CreateSuscriptionsFeaturesTable extends Migration
      */
     public function down()
     {
+        Schema::table('suscriptions__features', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);
+        });
         Schema::dropIfExists('suscriptions__features');
     }
 }

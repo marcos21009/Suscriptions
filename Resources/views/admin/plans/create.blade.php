@@ -5,33 +5,47 @@
         {{ trans('suscriptions::plans.title.create plan') }}
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.suscriptions.plan.index') }}">{{ trans('suscriptions::plans.title.plans') }}</a></li>
+        <li><a href="{{ route('dashboard.index') }}"><i
+                        class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
+        <li>
+            <a href="{{ route('admin.suscriptions.plan.index',[$product_id]) }}">{{ trans('suscriptions::plans.title.plans') }}</a>
+        </li>
         <li class="active">{{ trans('suscriptions::plans.title.create plan') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.suscriptions.plan.store'], 'method' => 'post']) !!}
+    {!! Form::open(['route' => ['admin.suscriptions.plan.store',[$product_id]], 'method' => 'post']) !!}
     <div class="row">
-        <div class="col-md-12">
-            <div class="nav-tabs-custom">
-                @include('partials.form-tab-headers')
-                <div class="tab-content">
-                    <?php $i = 0; ?>
-                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
-                        <?php $i++; ?>
-                        <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
-                            @include('suscriptions::admin.plans.partials.create-fields', ['lang' => $locale])
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                @include('partials.form-tab-headers')
+                                <div class="tab-content">
+                                    <?php $i = 0; ?>
+                                    @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
+                                        <?php $i++; ?>
+                                        <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}"
+                                             id="tab_{{ $i }}">
+                                            @include('suscriptions::admin.plans.partials.create-fields', ['lang' => $locale])
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div> {{-- end nav-tabs-custom --}}
                         </div>
-                    @endforeach
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.suscriptions.plan.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                        <div class="box-footer">
+                            <button type="submit"
+                                    class="btn btn-primary btn-flat">{{ trans('core::core.button.create') }}</button>
+                            <a class="btn btn-danger pull-right btn-flat"
+                               href="{{ route('admin.suscriptions.feature.index',[$product_id])}}"><i
+                                        class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                        </div>
                     </div>
                 </div>
-            </div> {{-- end nav-tabs-custom --}}
+            </div>
         </div>
     </div>
     {!! Form::close() !!}
@@ -49,16 +63,16 @@
 
 @push('js-stack')
     <script type="text/javascript">
-        $( document ).ready(function() {
+        $(document).ready(function () {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.suscriptions.plan.index') ?>" }
+                    {key: 'b', route: "<?= route('admin.suscriptions.plan.index', [$product_id]) ?>"}
                 ]
             });
         });
     </script>
     <script>
-        $( document ).ready(function() {
+        $(document).ready(function () {
             $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
                 checkboxClass: 'icheckbox_flat-blue',
                 radioClass: 'iradio_flat-blue'

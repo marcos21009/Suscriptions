@@ -5,7 +5,8 @@
         {{ trans('suscriptions::features.title.features') }}
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
+        <li><a href="{{ route('dashboard.index') }}"><i
+                        class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li class="active">{{ trans('suscriptions::features.title.features') }}</li>
     </ol>
 @stop
@@ -15,7 +16,8 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ route('admin.suscriptions.feature.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
+                    <a href="{{ route('admin.suscriptions.feature.create',[$product_id]) }}"
+                       class="btn btn-primary btn-flat" style="padding: 4px 10px;">
                         <i class="fa fa-pencil"></i> {{ trans('suscriptions::features.button.create feature') }}
                     </a>
                 </div>
@@ -29,33 +31,81 @@
                         <table class="data-table table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>{{ trans('suscriptions::features.table.id') }}</th>
+                                <th>{{ trans('suscriptions::features.table.name') }}</th>
+                                <th>{{ trans('suscriptions::features.table.caption') }}</th>
+                                <th>{{ trans('suscriptions::features.table.unit') }}</th>
+                                <th>{{ trans('suscriptions::features.table.status') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
+                                <th>{{ trans('suscriptions::common.table.updated at') }}</th>
                                 <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($features)): ?>
-                            <?php foreach ($features as $feature): ?>
-                            <tr>
-                                <td>
-                                    <a href="{{ route('admin.suscriptions.feature.edit', [$feature->id]) }}">
-                                        {{ $feature->created_at }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a href="{{ route('admin.suscriptions.feature.edit', [$feature->id]) }}" class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.suscriptions.feature.destroy', [$feature->id]) }}"><i class="fa fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                            <?php endif; ?>
+                            @if (isset($features))
+                                @foreach ($features as $feature)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->id }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->caption }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->unit }}
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <span class="label {{ $feature->present()->statusLabelClass}}">
+                                            {{ $feature->present()->status}}
+                                    </span>
+
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->created_at }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}">
+                                                {{ $feature->updated_at }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ route('admin.suscriptions.feature.edit', [$product_id,$feature->id]) }}"
+                                                   class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
+                                                <button class="btn btn-danger btn-flat" data-toggle="modal"
+                                                        data-target="#modal-delete-confirmation"
+                                                        data-action-target="{{ route('admin.suscriptions.feature.destroy', [$product_id,$feature->id]) }}">
+                                                    <i class="fa fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                             <tfoot>
                             <tr>
+                                <th>{{ trans('suscriptions::features.table.id') }}</th>
+                                <th>{{ trans('suscriptions::features.table.name') }}</th>
+                                <th>{{ trans('suscriptions::features.table.caption') }}</th>
+                                <th>{{ trans('suscriptions::features.table.unit') }}</th>
+                                <th>{{ trans('suscriptions::features.table.status') }}</th>
                                 <th>{{ trans('core::core.table.created at') }}</th>
-                                <th>{{ trans('core::core.table.actions') }}</th>
+                                <th>{{ trans('suscriptions::common.table.updated at') }}</th>
+                                <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -81,10 +131,10 @@
 
 @push('js-stack')
     <script type="text/javascript">
-        $( document ).ready(function() {
+        $(document).ready(function () {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.suscriptions.feature.create') ?>" }
+                    {key: 'c', route: "<?= route('admin.suscriptions.feature.create',[$product_id]) ?>"}
                 ]
             });
         });
@@ -99,7 +149,7 @@
                 "sort": true,
                 "info": true,
                 "autoWidth": true,
-                "order": [[ 0, "desc" ]],
+                "order": [[0, "desc"]],
                 "language": {
                     "url": '<?php echo Module::asset("core:js/vendor/datatables/{$locale}.json") ?>'
                 }

@@ -1,5 +1,13 @@
 url: https://github.com/AsgardCms/Platform
 versions:
+    "0.1.2":
+        added:
+          - controller features
+          - respisitories features
+          - view creates and index features
+          - controller plans
+          - respisitories plans
+          - view index
     "0.1.1":
         added:
           - migrate product

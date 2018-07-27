@@ -57,6 +57,7 @@ class ProductController extends AdminBaseController
         $statuses = $this->status->lists();
         $users = $this->users->all();
         $this->assetPipeline->requireJs('ckeditor.js');
+        $this->assetPipeline->requireJs('icheck.js');
         return view('suscriptions::admin.products.create', compact('statuses', 'users'));
     }
 
@@ -94,6 +95,7 @@ class ProductController extends AdminBaseController
         $statuses = $this->status->lists();
         $users = $this->users->all();
         $this->assetPipeline->requireJs('ckeditor.js');
+        $this->assetPipeline->requireJs('icheck.js');
         $thumbnail = $this->file->findFileByZoneForEntity('thumbnail', $product);
         return view('suscriptions::admin.products.edit', compact('product', 'thumbnail', 'statuses', 'users'));
     }
