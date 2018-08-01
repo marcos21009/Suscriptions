@@ -23,14 +23,14 @@ class PlanController extends AdminBaseController
     private $feature;
     private $plan_feature;
 
-    public function __construct(PlanRepository $plan, Status $status, FeatureRepository $feature, PlanFeatureRepository $planFeature )
+    public function __construct(PlanRepository $plan, Status $status, FeatureRepository $feature, PlanFeatureRepository $planFeature)
     {
         parent::__construct();
 
         $this->plan = $plan;
-        $this->status=$status;
-        $this->feature=$feature;
-        $this->plan_feature=$planFeature;
+        $this->status = $status;
+        $this->feature = $feature;
+        $this->plan_feature = $planFeature;
 
     }
 
@@ -44,7 +44,7 @@ class PlanController extends AdminBaseController
     {
         $plans = $this->plan->whereProduct($product_id, 20);
 
-        return view('suscriptions::admin.plans.index', compact('product_id','plans'));
+        return view('suscriptions::admin.plans.index', compact('product_id', 'plans'));
     }
 
     /**
@@ -56,7 +56,7 @@ class PlanController extends AdminBaseController
     public function create($product_id)
     {
         $statuses = $this->status->lists();
-        $features=$this->feature->whereProduct($product_id,50);
+        $features = $this->feature->whereProduct($product_id, 50);
         $this->assetPipeline->requireJs('icheck.js');
         return view('suscriptions::admin.plans.create', compact('product_id', 'statuses', 'features'));
     }
@@ -97,17 +97,18 @@ class PlanController extends AdminBaseController
     public function edit($product_id, Plan $plan)
     {
 
-        if($product_id==$plan->product_id){
+        if ($product_id == $plan->product_id) {
 
             $statuses = $this->status->lists();
-            $features=$this->feature->whereProduct($product_id,50);
+            $features = $this->feature->whereProduct($product_id, 50);
             $this->assetPipeline->requireJs('ckeditor.js');
-            return view('suscriptions::admin.plans.edit', compact('statuses','plan', 'features'));
-        }else{
+            return view('suscriptions::admin.plans.edit', compact('statuses', 'plan', 'features'));
+        } else {
             //realizr una redireccion 404
             return abort(404);
 
 
+        }
     }
 
     /**
