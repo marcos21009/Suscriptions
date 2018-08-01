@@ -6,16 +6,22 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.suscriptions.feature.index') }}">{{ trans('suscriptions::features.title.features') }}</a></li>
+        <li><a href="{{ route('admin.suscriptions.feature.index',[$product_id]) }}">{{ trans('suscriptions::features.title.features') }}</a></li>
         <li class="active">{{ trans('suscriptions::features.title.edit feature') }}</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.suscriptions.feature.update', $feature->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.suscriptions.feature.update',$product_id, $feature->id], 'method' => 'put']) !!}
+
+        <input type="hidden" name="product_id" value="{{$feature->product_id}}">
     <div class="row">
-        <div class="col-md-12">
-            <div class="nav-tabs-custom">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
                 @include('partials.form-tab-headers')
                 <div class="tab-content">
                     <?php $i = 0; ?>
@@ -25,10 +31,49 @@
                             @include('suscriptions::admin.features.partials.edit-fields', ['lang' => $locale])
                         </div>
                     @endforeach
+                        <div class="box-body">
 
+
+                                        <div class='form-group{{ $errors->has("status") ? ' has-error' : '' }}'>
+                                            <div>
+                                                <label>{{trans('suscriptions::status.title')}}</label>
+                                            </div>
+                                            <label class="radio-inline" for="{{trans('suscriptions::status.inactive')}}">
+                                                <input type="radio" id="status" name="status" value="0" {{$feature->status == 0 ? 'checked':''}}>
+                                                {{trans('suscriptions::status.inactive')}}
+                                            </label>
+
+                                            <label class="radio-inline" for="{{trans('suscriptions::status.active')}}">
+                                                <input type="radio" id="status" name="status" value="1" {{$feature->status == 1 ? 'checked':''}}>
+                                                {{trans('suscriptions::status.active')}}
+                                            </label>
+                                        </div>
+
+                                        <div class='form-group{{ $errors->has("type") ? ' has-error' : '' }}'>
+                                            {!! Form::label("type", trans('suscriptions::features.form.type')) !!}
+                                            <select class="form-control">
+                                                <option>{{trans('suscriptions::types.type selection')}}</option>
+                                                <option value="0" {{$feature->type_id == 0 ? 'selected':''}}>{{ trans('suscriptions::types.quantity')}}</option>
+                                                <option value="1" {{$feature->type_id == 1 ? 'selected':''}}>{{trans('suscriptions::types.text')}}</option>
+                                                <option value="2" {{$feature->type_id == 2 ? 'selected':''}}>{{trans('suscriptions::types.boolean')}}</option>
+                                            </select>
+                                            {!! $errors->first("type", '<span class="help-block">:message</span>') !!}
+                                        </div>
+
+                                     @php $oldUnit = $feature->unit ?? ''@endphp
+                                        <div class='form-group{{ $errors->has("unit") ? ' has-error' : '' }}'>
+                                            {!! Form::label("unit", trans('suscriptions::features.form.unit')) !!}
+                                            {!! Form::text("unit", old("unit", $oldUnit), ['class' => 'form-control', 'placeholder' => trans('suscriptions::features.form.unit')]) !!}
+                                            {!! $errors->first("unit", '<span class="help-block">:message</span>') !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div> {{-- end nav-tabs-custom --}}
+                        </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.suscriptions.feature.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.suscriptions.feature.index',[$product_id])}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
                 </div>
             </div> {{-- end nav-tabs-custom --}}
@@ -52,7 +97,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.suscriptions.feature.index') ?>" }
+                    { key: 'b', route: "<?= route('admin.suscriptions.feature.index',[$product_id]) ?>" }
                 ]
             });
         });

@@ -15,7 +15,7 @@ class Feature extends Model
 
     protected $table = 'suscriptions__features';
     public $translatedAttributes = ['name','caption', 'description'];
-    protected $fillable = ['name','caption','description','status','type','unit','options'];
+    protected $fillable = ['name','caption','description','status','type','unit','options','product_id'];
     protected $presenter = ProductPresenter::class;
     protected static $entityNamespace = 'encore/suscriptions';
     /**

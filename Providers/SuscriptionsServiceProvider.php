@@ -97,6 +97,18 @@ class SuscriptionsServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
+            'Modules\Suscriptions\Repositories\PlanFeatureRepository',
+            function () {
+                $repository = new \Modules\Suscriptions\Repositories\Eloquent\EloquentPlanFeatureRepository(new \Modules\Suscriptions\Entities\PlanFeature());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Suscriptions\Repositories\Cache\CachePlanFeatureDecorator($repository);
+            }
+        );
+        $this->app->bind(
             'Modules\Suscriptions\Repositories\SuscriptionRepository',
             function () {
                 $repository = new \Modules\Suscriptions\Repositories\Eloquent\EloquentSuscriptionRepository(new \Modules\Suscriptions\Entities\Suscription());

@@ -135,7 +135,7 @@
         $(document).ready(function () {
             $(document).keypressAction({
                 actions: [
-                    {key: 'c', route: "<?= route('admin.suscriptions.plan.create') ?>"}
+                    {key: 'c', route: "<?= route('admin.suscriptions.plan.create',[$product_id]) ?>"}
                 ]
             });
         });

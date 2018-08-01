@@ -11,7 +11,7 @@
     </div>
     <div class='form-group{{ $errors->has("$lang.description") ? ' has-error' : '' }}'>
         {!! Form::label("{$lang}[description]", trans('suscriptions::features.form.description')) !!}
-        {!! Form::textarea("{$lang}[description]", old("$lang.caption"), ['class' => 'form-control',  'rows' => 3, 'placeholder' => trans('suscriptions::features.form.description')]) !!}
+        {!! Form::textarea("{$lang}[description]", old("$lang.description"), ['class' => 'form-control',  'rows' => 3, 'placeholder' => trans('suscriptions::features.form.description')]) !!}
         {!! $errors->first("$lang.description", '<span class="help-block">:message</span>') !!}
     </div>
     

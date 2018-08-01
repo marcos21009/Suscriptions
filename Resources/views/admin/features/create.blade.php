@@ -17,6 +17,7 @@
 @section('content')
     <form method="post" action="{{route('admin.suscriptions.feature.store',[$product_id])}}">
         {{ csrf_field() }}
+        <input type="hidden" name="product_id" value="{{$product_id}}">
     <div class="row">
         <div class="col-md-4">
             <div class="row">

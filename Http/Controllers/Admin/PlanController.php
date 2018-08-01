@@ -9,6 +9,8 @@ use Modules\Suscriptions\Entities\Status;
 use Modules\Suscriptions\Http\Requests\CreatePlanRequest;
 use Modules\Suscriptions\Http\Requests\UpdatePlanRequest;
 use Modules\Suscriptions\Repositories\PlanRepository;
+use Modules\Suscriptions\Repositories\FeatureRepository;
+use Modules\Suscriptions\Repositories\PlanFeatureRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
 class PlanController extends AdminBaseController
@@ -18,13 +20,18 @@ class PlanController extends AdminBaseController
      */
     private $plan;
     private $status;
+    private $feature;
+    private $plan_feature;
 
-    public function __construct(PlanRepository $plan, Status $status)
+    public function __construct(PlanRepository $plan, Status $status, FeatureRepository $feature, PlanFeatureRepository $planFeature )
     {
         parent::__construct();
 
         $this->plan = $plan;
         $this->status=$status;
+        $this->feature=$feature;
+        $this->plan_feature=$planFeature;
+
     }
 
     /**
@@ -37,7 +44,7 @@ class PlanController extends AdminBaseController
     {
         $plans = $this->plan->whereProduct($product_id, 20);
 
-        return view('suscriptions::admin.plans.index', compact('plans'));
+        return view('suscriptions::admin.plans.index', compact('product_id','plans'));
     }
 
     /**
@@ -49,8 +56,9 @@ class PlanController extends AdminBaseController
     public function create($product_id)
     {
         $statuses = $this->status->lists();
+        $features=$this->feature->whereProduct($product_id,50);
         $this->assetPipeline->requireJs('icheck.js');
-        return view('suscriptions::admin.plans.create', compact('product_id', 'statuses'));
+        return view('suscriptions::admin.plans.create', compact('product_id', 'statuses', 'features'));
     }
 
     /**
@@ -82,14 +90,24 @@ class PlanController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $product_id
      * @param  Plan $plan
      * @return Response
      */
     public function edit($product_id, Plan $plan)
     {
-        $statuses = $this->status->lists();
-        $this->assetPipeline->requireJs('ckeditor.js');
-        return view('suscriptions::admin.plans.edit', compact('statuses','plan'));
+
+        if($product_id==$plan->product_id){
+
+            $statuses = $this->status->lists();
+            $features=$this->feature->whereProduct($product_id,50);
+            $this->assetPipeline->requireJs('ckeditor.js');
+            return view('suscriptions::admin.plans.edit', compact('statuses','plan', 'features'));
+        }else{
+            //realizr una redireccion 404
+            return abort(404);
+
+
     }
 
     /**

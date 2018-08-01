@@ -25,6 +25,12 @@ return [
 
     ],
     'form' => [
+        'name'=>'Name',
+        'caption'=>'Caption',
+        'description'=>'Description',
+        'title'=>'Title',
+        'type'=>'Type',
+        'unit'=>'Unit'
     ],
     'messages' => [
     ],

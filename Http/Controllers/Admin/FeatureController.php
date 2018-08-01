@@ -63,11 +63,13 @@ class FeatureController extends AdminBaseController
      */
     public function store($product_id, CreateFeatureRequest $request)
     {
+
         try {
             if ($product_id==$request->product_id) {
+
                 $this->feature->create($request->all());
 
-                return redirect()->route('admin.suscriptions.feature.index')
+                return redirect()->route('admin.suscriptions.feature.index',[$product_id])
                     ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('suscriptions::features.title.features')]));
             }
             return Redirect::back()->withErrors(trans('core::core.messages.resource error', ['name' => 'product id does not match']))->withInput($request->all());
@@ -87,9 +89,15 @@ class FeatureController extends AdminBaseController
      */
     public function edit($product_id,Feature $feature)
     {
-        $statuses = $this->status->lists();
-        $this->assetPipeline->requireJs('ckeditor.js');
-        return view('suscriptions::admin.features.edit', compact('feature'));
+        if($product_id==$feature->product_id){
+            $statuses = $this->status->lists();
+            $this->assetPipeline->requireJs('ckeditor.js');
+            return view('suscriptions::admin.features.edit', compact('feature','product_id','statuses'));
+        }else{
+            //realizr una redireccion 404
+            return abort(404);
+        }
+
 
     }
 
@@ -100,17 +108,17 @@ class FeatureController extends AdminBaseController
      * @param  UpdateFeatureRequest $request
      * @return Response
      */
-    public function update(Feature $feature, UpdateFeatureRequest $request)
+    public function update($product_id,Feature $feature, UpdateFeatureRequest $request)
     {
         try {
             $this->feature->update($feature, $request->all());
 
-            return redirect()->route('admin.suscriptions.feature.index')
+            return redirect()->route('admin.suscriptions.feature.index', [$product_id])
                 ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('suscriptions::features.title.features')]))->withInput($request->all());
         } catch (\Exception $e) {
             \Log::error($e);
             return redirect()->back()
-                ->withSuccess(trans('core::core.messages.resource error', ['name' => trans('suscriptions::features.title.features')]))->withInput($request->all());
+                ->withError(trans('core::core.messages.resource error', ['name' => trans('suscriptions::features.title.features')]))->withInput($request->all());
 
 
         }
@@ -122,17 +130,23 @@ class FeatureController extends AdminBaseController
      * @param  Feature $feature
      * @return Response
      */
-    public function destroy(Feature $feature)
+    public function destroy($product_id,Feature $feature)
     {
         try {
-            $this->feature->destroy($feature);
+            if($product_id==$feature->product_id){
+                $this->feature->destroy($feature);
 
-            return redirect()->route('admin.suscriptions.feature.index')
-                ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('suscriptions::features.title.features')]));
+                return redirect()->route('admin.suscriptions.feature.index',[$product_id])
+                    ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('suscriptions::features.title.features')]));
+            }else{
+                //realizr una redireccion 404
+                return abort(404);
+            }
+
         } catch (\Exception $e) {
             \Log::error($e);
             return redirect()->route('admin.suscriptions.feature.index')
-                ->withSuccess(trans('core::core.messages.resource error', ['name' => trans('suscriptions::features.title.features')]));
+                ->withError(trans('core::core.messages.resource error', ['name' => trans('suscriptions::features.title.features')]));
 
 
         }
