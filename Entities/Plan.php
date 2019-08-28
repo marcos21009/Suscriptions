@@ -14,7 +14,22 @@ class Plan extends Model
 
     protected $table = 'suscriptions__plans';
     public $translatedAttributes = ['name','description'];
-    protected $fillable = ['name','description','code','status','display_order','recommendation','free','visible','price','frequency','bill_cycle','trial_period','product_id','options'];
+    protected $fillable = [
+      'name',
+      'description',
+      'code',
+      'status',
+      'display_order',
+      'recommendation',
+      'free',
+      'visible',
+      'price',
+      'frequency',
+      'bill_cycle',
+      'trial_period',
+      'product_id',
+      'options'
+    ];
     protected $presenter = ProductPresenter::class;
     protected static $entityNamespace = 'encore/suscriptions';
     /**
@@ -31,13 +46,18 @@ class Plan extends Model
      * @return mixed
      */
     public function product(){
-        return $this->belogsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
 
     public function planfeature()
     {
         return $this->hasMany(PlanFeature::class);
+    }
+
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class, 'suscriptions__planfeatures')->withTimestamps();
     }
 
     /**

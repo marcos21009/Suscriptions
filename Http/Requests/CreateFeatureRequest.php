@@ -8,12 +8,18 @@ class CreateFeatureRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+          'type'=>'required',
+          'product_id'=>'required|exists:suscriptions__products,id',
+
+        ];
     }
 
     public function translationRules()
     {
-        return [];
+      return [
+        'name'=>'required|min:2'
+      ];
     }
 
     public function authorize()

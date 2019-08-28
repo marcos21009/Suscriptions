@@ -14,7 +14,7 @@ class CreateProductRequest extends BaseFormRequest
     public function translationRules()
     {
         return [
-            'name'=>'required:min2'
+            'name'=>'required|min:2'
         ];
     }
 

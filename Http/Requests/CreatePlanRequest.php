@@ -8,12 +8,20 @@ class CreatePlanRequest extends BaseFormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+          'code'=>'required',
+          'frequency'=>'required',
+          'bill_cycle'=>'required',
+          'product_id'=>'required|exists:suscriptions__products,id',
+
+        ];
     }
 
     public function translationRules()
     {
-        return [];
+        return [
+          'name'=>'required|min:2'
+        ];
     }
 
     public function authorize()

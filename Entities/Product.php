@@ -17,7 +17,14 @@ class Product extends Model
 
     protected $table = 'suscriptions__products';
     public $translatedAttributes = ['name','description'];
-    protected $fillable = ['name','description','require_shipping_address','status','user_id','options'];
+    protected $fillable = [
+      'name',
+      'description',
+      'require_shipping_address',
+      'status',
+      'user_id',
+      'options'
+    ];
     protected $presenter = ProductPresenter::class;
     protected static $entityNamespace = 'encore/suscriptions';
     /**

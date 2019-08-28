@@ -4,6 +4,7 @@ return [
     'singular'=>'Feature',
     'plural'=>'Features',
     'list resource' => 'List features',
+    'manage resource' => 'Manage features',
     'create resource' => 'Create features',
     'edit resource' => 'Edit features',
     'destroy resource' => 'Destroy features',

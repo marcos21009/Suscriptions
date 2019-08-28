@@ -37,7 +37,7 @@ class Feature extends Model
 
     public function product(){
 
-        return $this->belogsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     /**

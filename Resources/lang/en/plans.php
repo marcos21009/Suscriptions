@@ -4,6 +4,7 @@ return [
     'singular'=>'Plan',
     'plural'=>'Plans',
     'list resource' => 'List plans',
+    'manage resource' => 'Manage plans',
     'create resource' => 'Create plans',
     'edit resource' => 'Edit plans',
     'destroy resource' => 'Destroy plans',

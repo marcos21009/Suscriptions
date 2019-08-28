@@ -4,6 +4,7 @@ return [
     'singular'=>'Product',
     'plural'=>'products',
     'list resource' => 'List products',
+    'manage resource' => 'Manage products',
     'create resource' => 'Create products',
     'edit resource' => 'Edit products',
     'destroy resource' => 'Destroy products',

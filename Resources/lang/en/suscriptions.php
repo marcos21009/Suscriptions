@@ -4,6 +4,7 @@ return [
     'singular'=>'Suscription',
     'plural'=>'Suscriptions',
     'list resource' => 'List suscriptions',
+    'manage resource' => 'Manage suscriptions',
     'create resource' => 'Create suscriptions',
     'edit resource' => 'Edit suscriptions',
     'destroy resource' => 'Destroy suscriptions',
