@@ -130,7 +130,7 @@ class ProductApiController extends BaseApiController
       $params = $this->getParamsRequest($request);
 
       //Get ticket
-      $product = $this->ticket->getItem($criteria, $params);
+      $product = $this->product->getItem($criteria, $params);
       if(!$product)
       throw new \Exception("Item not found", 404);
 
