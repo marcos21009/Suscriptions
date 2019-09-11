@@ -32,9 +32,9 @@ class ProductTransformer extends Resource
           $languages = \LaravelLocalization::getSupportedLocales();
           foreach ($languages as $lang => $value) {
             if ($this->hasTranslation($lang)) {
-              $item[$lang]['name'] = $this->hasTranslation($lang) ?
+              $data[$lang]['name'] = $this->hasTranslation($lang) ?
                 $this->translate("$lang")['name'] : '';
-              $item[$lang]['description'] = $this->hasTranslation($lang) ?
+              $data[$lang]['description'] = $this->hasTranslation($lang) ?
                 $this->translate("$lang")['description'] : '';
             }
           }

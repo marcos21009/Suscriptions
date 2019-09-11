@@ -15,8 +15,6 @@ class Plan extends Model
     protected $table = 'suscriptions__plans';
     public $translatedAttributes = ['name','description'];
     protected $fillable = [
-      'name',
-      'description',
       'code',
       'status',
       'display_order',

@@ -129,8 +129,8 @@ class PlanApiController extends BaseApiController
       //Get Parameters from URL.
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
-      $plan = $this->ticket->getItem($criteria, $params);
+      //Get plan
+      $plan = $this->plan->getItem($criteria, $params);
       if(!$plan)
       throw new \Exception("Item not found", 404);
 
@@ -163,7 +163,7 @@ class PlanApiController extends BaseApiController
       //Get params
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
+      //Get plan
       $plan = $this->plan->getItem($criteria, $params);
       if(!$plan)
       throw new \Exception("Item not found", 404);

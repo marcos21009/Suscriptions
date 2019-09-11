@@ -30,7 +30,7 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
       if(in_array('*',$params->include)){//If Request all relationships
         $query->with([]);
       }else{//Especific relationships
-        $includeDefault = [];//Default relationships
+        $includeDefault = ["translations"];//Default relationships
         if (isset($params->include))//merge relations with default relationships
         $includeDefault = array_merge($includeDefault, $params->include);
         $query->with($includeDefault);//Add Relationships to query
@@ -66,7 +66,7 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
       if(in_array('*',$params->include)){//If Request all relationships
         $query->with([]);
       }else{//Especific relationships
-        $includeDefault = [];//Default relationships
+        $includeDefault = ["translations"];//Default relationships
         if (isset($params->include))//merge relations with default relationships
           $includeDefault = array_merge($includeDefault, $params->include);
         $query->with($includeDefault);//Add Relationships to query
@@ -93,6 +93,11 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
           $query->orderBy($orderByField, $orderWay);//Add order to query
         }
 
+        //ProductId
+        if(isset($filter->productId)){
+          $query->where('product_id',$filter->productId);
+        }
+
       }
 
       /*== FIELDS ==*/
@@ -115,6 +120,19 @@ class EloquentPlanRepository extends EloquentBaseRepository implements PlanRepos
       if ($plan) {
         // sync tables
         $plan->features()->sync(array_get($data, 'features', []));
+
+      }
+
+      return $plan;
+    }
+
+    public function update($model,$data)
+    {
+      $plan = $model->update($data);
+
+      if ($plan) {
+        // sync tables
+        $model->features()->sync(array_get($data, 'features', []));
 
       }
 

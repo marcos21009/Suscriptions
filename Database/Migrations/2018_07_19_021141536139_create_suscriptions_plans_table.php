@@ -22,8 +22,8 @@ class CreateSuscriptionsPlansTable extends Migration
             $table->boolean('free')->default(false);
             $table->boolean('visible')->default(false);
             $table->double('price',30,2)->nullable();
-            $table->integer('frequency');
-            $table->string('bill_cycle');
+            $table->integer('frequency');//30
+            $table->string('bill_cycle');//week,month,year
             $table->integer('trial_period')->default(0);
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('suscriptions__products')->onDelete('cascade');

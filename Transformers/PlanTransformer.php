@@ -31,6 +31,22 @@ class PlanTransformer extends Resource
           'updatedAt' => $this->when($this->updated_at, $this->updated_at),
         ];
 
+        // TRANSLATIONS
+        $filter = json_decode($request->filter);
+        // Return data with available translations
+        if (isset($filter->allTranslations) && $filter->allTranslations) {
+          // Get langs avaliables
+          $languages = \LaravelLocalization::getSupportedLocales();
+          foreach ($languages as $lang => $value) {
+            if ($this->hasTranslation($lang)) {
+              $data[$lang]['name'] = $this->hasTranslation($lang) ?
+                $this->translate("$lang")['name'] : '';
+              $data[$lang]['description'] = $this->hasTranslation($lang) ?
+                $this->translate("$lang")['description'] : '';
+            }
+          }
+        }
+
         return $data;
     }
 }
