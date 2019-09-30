@@ -17,7 +17,6 @@ class CreateSuscriptionsSuscriptionsTable extends Migration
             $table->increments('id');
             $table->date('init_date');
             $table->date('end_date');
-            $table->bigInteger('days_quantity')->default(0);
             $table->smallInteger('status')->default(0);
             $table->float('total', 30, 2)->default(0);
             $table->integer('user_id')->unsigned();

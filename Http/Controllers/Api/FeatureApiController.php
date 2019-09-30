@@ -129,8 +129,8 @@ class FeatureApiController extends BaseApiController
       //Get Parameters from URL.
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
-      $feature = $this->ticket->getItem($criteria, $params);
+      //Get feature
+      $feature = $this->feature->getItem($criteria, $params);
       if(!$feature)
       throw new \Exception("Item not found", 404);
 
@@ -163,7 +163,7 @@ class FeatureApiController extends BaseApiController
       //Get params
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
+      //Get feature
       $feature = $this->feature->getItem($criteria, $params);
       if(!$feature)
       throw new \Exception("Item not found", 404);

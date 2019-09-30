@@ -15,7 +15,6 @@ class SuscriptionTransformer extends Resource
           'id' => $this->id,
           'initDate' => $this->init_date ?? '',
           'endDate' => $this->end_date ?? '',
-          'daysQuantity' => $this->daysQuantity ?? '',
           'total' => $this->total ?? '',
           'planId' => $this->plan_id ?? '',
           'userId' => $this->user_id ?? '',

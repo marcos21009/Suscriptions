@@ -23,6 +23,7 @@ class PlanTransformer extends Resource
           'price' => $this->price ?? '',
           'frequency' => $this->frequency ?? '',
           'billCycle' => $this->bill_cycle ?? '',
+          'billCycleText' => $this->present()->billCycle ?? '',
           'trialPeriod' => $this->trial_period ?? '',
           'options' => $this->options ?? '',
           'product' => new ProductTransformer($this->whenLoaded('product')),

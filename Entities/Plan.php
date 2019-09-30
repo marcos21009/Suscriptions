@@ -6,7 +6,7 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
-use Modules\Suscriptions\Presenters\PlansPresenter;
+use Modules\Suscriptions\Presenters\PlanPresenter;
 use Modules\Core\Traits\NamespacedEntity;
 class Plan extends Model
 {
@@ -28,7 +28,7 @@ class Plan extends Model
       'product_id',
       'options'
     ];
-    protected $presenter = ProductPresenter::class;
+    protected $presenter = PlanPresenter::class;
     protected static $entityNamespace = 'encore/suscriptions';
     /**
      * The attributes that should be casted to native types

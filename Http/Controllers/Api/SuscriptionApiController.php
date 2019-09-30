@@ -100,13 +100,22 @@ class SuscriptionApiController extends BaseApiController
       //Validate Request
       $this->validateRequestApi(new CreateSuscriptionRequest($data));
 
-      $plan=$this->plan->find($data['plan_id']);
-
-      $data['total']=$data['days_quantity']*$plan->price;
       $init_date=\Carbon\Carbon::now();
-      $end_date=\Carbon\Carbon::now()->addDay((int)$data['days_quantity']);
+      $end_date=\Carbon\Carbon::now();
+      $plan=$this->plan->find($data['plan_id']);
+      $user=\Auth::guard('api')->user() ?? \Auth::user();
+      $data['user_id']=$user->id;
+      if($plan->bill_cycle=="week"){
+        $end_date->addWeeks($plan->frequency);
+      }else if($plan->bill_cycle=="month"){
+        $end_date->addDays($plan->frequency);
+      }else if($plan->bill_cycle=="year"){
+        $end_date->addYears($plan->frequency);
+      }
+      $data['total']=$plan->price;
       $data['init_date']=$init_date->format("Y-m-d");
       $data['end_date']=$end_date->format("Y-m-d");
+      $data['status']=1;//Active
       //Create item
       $suscription = $this->suscription->create($data);
 
@@ -139,8 +148,8 @@ class SuscriptionApiController extends BaseApiController
       //Get Parameters from URL.
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
-      $suscription = $this->ticket->getItem($criteria, $params);
+      //Get suscription
+      $suscription = $this->suscription->getItem($criteria, $params);
       if(!$suscription)
       throw new \Exception("Item not found", 404);
 
@@ -173,7 +182,7 @@ class SuscriptionApiController extends BaseApiController
       //Get params
       $params = $this->getParamsRequest($request);
 
-      //Get ticket
+      //Get suscription
       $suscription = $this->suscription->getItem($criteria, $params);
       if(!$suscription)
       throw new \Exception("Item not found", 404);

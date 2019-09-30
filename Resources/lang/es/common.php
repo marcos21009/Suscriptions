@@ -17,4 +17,13 @@ return [
     ],
     'validation' => [
     ],
+    'email' => [
+      "subjects"=>[
+        "subscription expired"=>"Tu suscripción ha expirado"
+      ],
+      "messages"=>[
+        "hi"=>"Hola",
+        "subscription expired body"=>"Tu suscripción se ha vencido el día de hoy, si quieres renoverla deberas realizar nuevamente la compra de un plan."
+      ]
+    ],
 ];

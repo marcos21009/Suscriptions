@@ -31,6 +31,22 @@ class PlanPresenter extends Presenter
     {
         return $this->status->get($this->entity->status);
     }
+    /**
+     * Get the bill cycle
+     * @return string
+     */
+    public function billCycle()
+    {
+        $billCycle="";
+        if($this->entity->bill_cycle=="week"){
+          $billCycle=trans("suscriptions::bill_cycles.cycles.weeks");
+        }else if($this->entity->bill_cycle=="month"){
+          $billCycle=trans("suscriptions::bill_cycles.cycles.months");
+        }else if($this->entity->bill_cycle=="year"){
+          $billCycle=trans("suscriptions::bill_cycles.cycles.years");
+        }
+        return $billCycle;
+    }
 
     /**
      * Getting the label class for the appropriate status
